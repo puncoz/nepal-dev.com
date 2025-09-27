@@ -1,20 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import Card, { CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import {
-  Grid3X3,
   List,
   SlidersHorizontal,
   Users,
   Search,
   Grid,
-  Briefcase,
-  MapPin,
-  Star,
-  Clock,
   Calendar,
   User,
   Plus
@@ -23,7 +18,6 @@ import MentorshipBreadcrumb from '@/components/mentorship/MentorshipBreadcrumb';
 import { MentorCard, type MentorProfile } from '@/components/mentorship/MentorCard';
 import { FilterPanel, type FilterOptions } from '@/components/mentorship/FilterPanel';
 import Link from 'next/link';
-import { useMemo } from 'react';
 
 // MentorProfile interface is now imported from MentorCard component
 
@@ -134,25 +128,23 @@ const BrowsePage = () => {
       isFavorite: false
     },
     {
-      id: 5,
+      id: '5',
       name: 'Bikash Adhikari',
       title: 'Computer Science Student',
-      experience: '0 years',
+      company: 'Tribhuvan University',
+      experience: 0,
       location: 'Chitwan',
-      timezone: 'GMT+5:45',
       languages: ['English', 'Nepali'],
       rating: 0,
+      reviewCount: 0,
       avatar: '👨‍🎓',
       skills: ['Python', 'Java', 'Data Structures'],
-      specialties: ['Programming Fundamentals', 'Algorithms'],
-      availability: 'Weekends',
+      availability: ['Weekends'],
+      sessionTypes: ['chat', 'video'],
       responseTime: '< 24 hours',
-      menteesHelped: 0,
-      successRate: 0,
-      bio: 'CS student looking for guidance in software development and career planning.',
-      type: 'mentee',
-      isAvailable: true,
-      joinedDate: '2024-02-15'
+      totalSessions: 0,
+      isOnline: true,
+      bio: 'CS student looking for guidance in software development and career planning.'
     }
   ];
 
@@ -251,7 +243,7 @@ const BrowsePage = () => {
                 {[{ key: 'all', label: 'All' }, { key: 'mentors', label: 'Mentors' }, { key: 'mentees', label: 'Mentees' }].map(tab => (
                   <button
                     key={tab.key}
-                    onClick={() => setActiveTab(tab.key as any)}
+                    onClick={() => setActiveTab(tab.key as 'all' | 'mentors' | 'mentees')}
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                       activeTab === tab.key
                         ? 'bg-white text-green-600 shadow-sm'
@@ -311,7 +303,7 @@ const BrowsePage = () => {
             <FilterPanel
               filters={filters}
               onFiltersChange={setFilters}
-              onClearFilters={clearFilters}
+              onReset={clearFilters}
             />
           )}
 
@@ -339,7 +331,7 @@ const BrowsePage = () => {
                   }}
                   className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                 >
-                  Clear Search &amp; Filters
+                  Clear Search & Filters
                 </button>
               </Card>
             )}

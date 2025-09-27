@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { CheckCircle, Clock, Target, TrendingUp, Award, Calendar, Star, BookOpen } from 'lucide-react';
+import { CheckCircle, Clock, Target, TrendingUp, Award, Star, BookOpen } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';

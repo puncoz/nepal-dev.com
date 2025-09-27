@@ -8,7 +8,7 @@ import Label from '@/components/ui/Label';
 import Checkbox from '@/components/ui/Checkbox';
 import Badge from '@/components/ui/Badge';
 import Slider from '@/components/ui/Slider';
-import Select, { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import Select from '@/components/ui/Select';
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,20 +16,16 @@ import {
 } from '@/components/ui/Collapsible';
 import {
   Search,
-  Filter,
   X,
   ChevronDown,
   ChevronUp,
   Star,
-  MapPin,
-  Clock,
   DollarSign,
   Globe,
   Award,
   Users,
-  Video,
-  MessageSquare,
-  RefreshCw
+  RefreshCw,
+  MapPin
 } from 'lucide-react';
 
 export interface FilterOptions {
@@ -71,16 +67,12 @@ const languageOptions = [
   'Japanese', 'Korean', 'Portuguese', 'Russian', 'Arabic', 'Italian'
 ];
 
-const availabilityOptions = [
-  'Available now', 'Available today', 'Available this week',
-  'Available next week', 'Flexible schedule', 'Weekends only',
-  'Evenings only', 'Business hours only'
-];
+
 
 const sessionTypeOptions = [
-  { value: 'video', label: 'Video Call', icon: Video },
-  { value: 'audio', label: 'Audio Call', icon: MessageSquare },
-  { value: 'chat', label: 'Text Chat', icon: MessageSquare },
+  { value: 'video', label: 'Video Call', icon: Users },
+  { value: 'audio', label: 'Audio Call', icon: Users },
+  { value: 'chat', label: 'Text Chat', icon: Users },
   { value: 'in-person', label: 'In Person', icon: Users }
 ];
 
@@ -112,7 +104,7 @@ export const FilterPanel = ({
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const updateFilter = (key: keyof FilterOptions, value: any) => {
+  const updateFilter = <K extends keyof FilterOptions>(key: K, value: FilterOptions[K]) => {
     onFiltersChange({ ...filters, [key]: value });
   };
 
@@ -130,12 +122,7 @@ export const FilterPanel = ({
     updateFilter('languages', newLanguages);
   };
 
-  const toggleAvailability = (availability: string) => {
-    const newAvailability = filters.availability.includes(availability)
-      ? filters.availability.filter(a => a !== availability)
-      : [...filters.availability, availability];
-    updateFilter('availability', newAvailability);
-  };
+
 
   const toggleSessionType = (sessionType: string) => {
     const newSessionTypes = filters.sessionTypes.includes(sessionType)
@@ -173,10 +160,10 @@ export const FilterPanel = ({
                 onClick={onToggleCollapse}
                 className="flex items-center space-x-2"
               >
-                <Filter className="h-4 w-4" />
+                <Search className="h-4 w-4" />
                 <span>Filters</span>
                 {getActiveFiltersCount() > 0 && (
-                  <Badge variant="secondary" className="ml-2">
+                  <Badge variant="info" className="ml-2">
                     {getActiveFiltersCount()}
                   </Badge>
                 )}
@@ -195,21 +182,21 @@ export const FilterPanel = ({
                   />
                 </div>
                 
-                <Select value={filters.mentorType} onValueChange={(value) => updateFilter('mentorType', value)}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="mentor">Mentors</SelectItem>
-                    <SelectItem value="mentee">Mentees</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Select 
+                  value={filters.mentorType} 
+                  onChange={(e) => updateFilter('mentorType', e.target.value)}
+                  options={[
+                    { value: 'all', label: 'All' },
+                    { value: 'mentor', label: 'Mentors' },
+                    { value: 'mentee', label: 'Mentees' }
+                  ]}
+                  className="w-32"
+                />
               </div>
             </div>
             
             {getActiveFiltersCount() > 0 && (
-              <Button variant="ghost" size="sm" onClick={onReset}>
+              <Button variant="outline" size="sm" onClick={onReset}>
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Reset
               </Button>
@@ -225,21 +212,21 @@ export const FilterPanel = ({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center space-x-2">
-            <Filter className="h-5 w-5" />
+            <Search className="h-5 w-5" />
             <span>Filters</span>
             {getActiveFiltersCount() > 0 && (
-              <Badge variant="secondary">
+              <Badge variant="info">
                 {getActiveFiltersCount()}
               </Badge>
             )}
           </CardTitle>
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" onClick={onReset}>
+            <Button variant="outline" size="sm" onClick={onReset}>
               <RefreshCw className="h-4 w-4 mr-2" />
               Reset
             </Button>
             {onToggleCollapse && (
-              <Button variant="ghost" size="sm" onClick={onToggleCollapse}>
+              <Button variant="outline" size="sm" onClick={onToggleCollapse}>
                 <ChevronUp className="h-4 w-4" />
               </Button>
             )}
@@ -265,16 +252,15 @@ export const FilterPanel = ({
         {/* Mentor Type */}
         <div className="space-y-2">
           <Label>Looking for</Label>
-          <Select value={filters.mentorType} onValueChange={(value) => updateFilter('mentorType', value)}>
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Users</SelectItem>
-              <SelectItem value="mentor">Mentors Only</SelectItem>
-              <SelectItem value="mentee">Mentees Only</SelectItem>
-            </SelectContent>
-          </Select>
+          <Select 
+            value={filters.mentorType} 
+            onChange={(e) => updateFilter('mentorType', e.target.value)}
+            options={[
+              { value: 'all', label: 'All Users' },
+              { value: 'mentor', label: 'Mentors Only' },
+              { value: 'mentee', label: 'Mentees Only' }
+            ]}
+          />
         </div>
 
         {/* Skills */}
@@ -286,17 +272,17 @@ export const FilterPanel = ({
           <CollapsibleContent className="space-y-3 mt-3">
             <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
               {skillOptions.map((skill) => (
-                <Badge
-                  key={skill}
-                  variant={filters.skills.includes(skill) ? "default" : "outline"}
-                  className="cursor-pointer hover:bg-blue-100"
-                  onClick={() => toggleSkill(skill)}
-                >
-                  {skill}
-                  {filters.skills.includes(skill) && (
-                    <X className="h-3 w-3 ml-1" />
-                  )}
-                </Badge>
+                <div key={skill} onClick={() => toggleSkill(skill)}>
+                  <Badge
+                    variant={filters.skills.includes(skill) ? "success" : "default"}
+                    className="cursor-pointer hover:bg-blue-100"
+                  >
+                    {skill}
+                    {filters.skills.includes(skill) && (
+                      <X className="h-3 w-3 ml-1" />
+                    )}
+                  </Badge>
+                </div>
               ))}
             </div>
           </CollapsibleContent>
@@ -315,7 +301,7 @@ export const FilterPanel = ({
             <div className="px-3">
               <Slider
                 value={filters.experience}
-                onValueChange={(value) => updateFilter('experience', value)}
+                onValueChange={(value) => updateFilter('experience', value as [number, number])}
                 max={20}
                 min={0}
                 step={1}
@@ -361,7 +347,7 @@ export const FilterPanel = ({
               {[1, 2, 3, 4, 5].map((rating) => (
                 <Button
                   key={rating}
-                  variant={filters.rating >= rating ? "default" : "outline"}
+                  variant={filters.rating >= rating ? "primary" : "outline"}
                   size="sm"
                   onClick={() => updateFilter('rating', rating)}
                   className="flex items-center space-x-1"
@@ -387,7 +373,7 @@ export const FilterPanel = ({
             <div className="px-3">
               <Slider
                 value={filters.priceRange}
-                onValueChange={(value) => updateFilter('priceRange', value)}
+                onValueChange={(value) => updateFilter('priceRange', value as [number, number])}
                 max={200}
                 min={0}
                 step={5}
@@ -413,17 +399,17 @@ export const FilterPanel = ({
           <CollapsibleContent className="space-y-3 mt-3">
             <div className="flex flex-wrap gap-2">
               {languageOptions.map((language) => (
-                <Badge
-                  key={language}
-                  variant={filters.languages.includes(language) ? "default" : "outline"}
-                  className="cursor-pointer hover:bg-blue-100"
-                  onClick={() => toggleLanguage(language)}
-                >
-                  {language}
-                  {filters.languages.includes(language) && (
-                    <X className="h-3 w-3 ml-1" />
-                  )}
-                </Badge>
+                <div key={language} onClick={() => toggleLanguage(language)}>
+                  <Badge
+                    variant={filters.languages.includes(language) ? "success" : "default"}
+                    className="cursor-pointer hover:bg-blue-100"
+                  >
+                    {language}
+                    {filters.languages.includes(language) && (
+                      <X className="h-3 w-3 ml-1" />
+                    )}
+                  </Badge>
+                </div>
               ))}
             </div>
           </CollapsibleContent>
@@ -442,7 +428,7 @@ export const FilterPanel = ({
                   <Checkbox
                     id={option.value}
                     checked={filters.sessionTypes.includes(option.value)}
-                    onCheckedChange={() => toggleSessionType(option.value)}
+                    onChange={() => toggleSessionType(option.value)}
                   />
                   <Label htmlFor={option.value} className="flex items-center space-x-2 cursor-pointer">
                     <option.icon className="h-4 w-4" />
@@ -464,16 +450,11 @@ export const FilterPanel = ({
             {/* Response Time */}
             <div className="space-y-2">
               <Label>Response Time</Label>
-              <Select value={filters.responseTime} onValueChange={(value) => updateFilter('responseTime', value)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {responseTimeOptions.map((option) => (
-                    <SelectItem key={option} value={option}>{option}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Select 
+                value={filters.responseTime} 
+                onChange={(e) => updateFilter('responseTime', e.target.value)}
+                options={responseTimeOptions.map(option => ({ value: option, label: option }))}
+              />
             </div>
 
             {/* Online Status */}
@@ -481,7 +462,7 @@ export const FilterPanel = ({
               <Checkbox
                 id="online-only"
                 checked={filters.isOnline === true}
-                onCheckedChange={(checked) => updateFilter('isOnline', checked ? true : null)}
+                onChange={(e) => updateFilter('isOnline', e.target.checked ? true : null)}
               />
               <Label htmlFor="online-only" className="cursor-pointer">
                 Show only online users
@@ -493,7 +474,7 @@ export const FilterPanel = ({
               <Checkbox
                 id="has-reviews"
                 checked={filters.hasReviews}
-                onCheckedChange={(checked) => updateFilter('hasReviews', checked)}
+                onChange={(e) => updateFilter('hasReviews', e.target.checked)}
               />
               <Label htmlFor="has-reviews" className="cursor-pointer">
                 Has reviews only

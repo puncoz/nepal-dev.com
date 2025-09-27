@@ -3,7 +3,7 @@
 import { FunctionComponent, InputHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
-interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'value'> {
   value?: number[];
   onValueChange?: (value: number[]) => void;
   min?: number;

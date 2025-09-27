@@ -18,7 +18,6 @@ const RegisterPage: FunctionComponent = () => {
     timezone: 'Asia/Kathmandu',
     agreeToTerms: false
   });
-  const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -66,7 +65,7 @@ const RegisterPage: FunctionComponent = () => {
       gradient="green"
       footer={
         <p className="text-xs text-gray-500">
-          Join thousands of developers building Nepal's tech future
+          Join thousands of developers building Nepal&apos;s tech future
         </p>
       }
     >

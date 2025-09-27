@@ -14,7 +14,6 @@ import {
   Play, 
   Globe, 
   TrendingUp,
-  Award,
   Heart,
   Code,
   Zap
@@ -478,7 +477,7 @@ const HomePage = () => {
               </div>
               
               <blockquote className="text-2xl text-gray-900 mb-6 font-medium">
-                "{testimonials[currentTestimonial].content}"
+                &quot;{testimonials[currentTestimonial].content}&quot;
               </blockquote>
               
               <div className="flex items-center justify-center space-x-4">
@@ -580,7 +579,7 @@ const HomePage = () => {
       <section className="py-24 bg-gradient-to-r from-blue-600 to-green-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Join Nepal's Largest Developer Community?
+            Ready to Join Nepal&apos;s Largest Developer Community?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
             Connect with mentors, discover opportunities, and accelerate your career today.
@@ -612,7 +611,7 @@ const HomePage = () => {
                 <span className="text-xl font-bold">Nepal Developers Hub</span>
               </div>
               <p className="text-gray-400 mb-4 max-w-md">
-                Empowering Nepal's developer ecosystem through mentorship, collaboration, and community-driven growth.
+                Empowering Nepal&apos;s developer ecosystem through mentorship, collaboration, and community-driven growth.
               </p>
               <div className="flex space-x-4">
                 <Globe className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer" />

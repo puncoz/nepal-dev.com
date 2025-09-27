@@ -21,7 +21,7 @@ const DashboardPage: FunctionComponent = () => {
             Welcome back, Developer! 👋
           </h1>
           <p className="text-gray-600">
-            Here's what's happening in your Nepal Dev Hub today.
+            Here&apos;s what&apos;s happening in your Nepal Dev Hub today.
           </p>
         </div>
 

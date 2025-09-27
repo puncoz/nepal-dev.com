@@ -2,7 +2,6 @@
 
 import { FunctionComponent, useState } from 'react';
 import { Bell, Search, User, Menu, Settings, LogOut, MessageSquare } from 'lucide-react';
-import Button from '@/components/ui/Button';
 
 const DashboardHeader: FunctionComponent = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);

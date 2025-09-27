@@ -55,10 +55,11 @@ const DropdownMenuTrigger: React.FC<DropdownMenuTriggerProps> = ({ children, cla
   };
 
   if (asChild && React.isValidElement(children)) {
+    const childProps = children.props as { className?: string };
     return React.cloneElement(children, {
       onClick: handleClick,
-      className: cn(children.props.className, className)
-    });
+      className: cn(childProps.className, className)
+    } as React.HTMLAttributes<HTMLElement>);
   }
 
   return (

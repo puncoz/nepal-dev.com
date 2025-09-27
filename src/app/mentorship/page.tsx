@@ -150,7 +150,7 @@ const MentorshipHub = () => {
             </h1>
           </div>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Connect, learn, and grow with Nepal's developer community through meaningful mentorship relationships.
+            Connect, learn, and grow with Nepal{"'"} developer community through meaningful mentorship relationships.
           </p>
         </div>
 
@@ -271,7 +271,7 @@ const MentorshipHub = () => {
         <Card className="p-8 bg-gradient-to-r from-blue-500 to-green-500 text-white text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to Make an Impact?</h2>
           <p className="text-lg mb-6 opacity-90">
-            Join thousands of developers in Nepal's most active mentorship community
+            Join thousands of developers in Nepal{"'"} most active mentorship community
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/mentorship/matches">

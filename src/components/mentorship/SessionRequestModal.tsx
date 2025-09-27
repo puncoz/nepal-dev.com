@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { X, Calendar, Clock, MessageSquare, Target, User, Send, AlertCircle } from 'lucide-react';
 
@@ -15,7 +17,7 @@ interface SessionRequestModalProps {
   onSubmit: (requestData: SessionRequestData) => void;
 }
 
-interface SessionRequestData {
+export interface SessionRequestData {
   mentorId: number;
   sessionType: string;
   preferredDate: string;

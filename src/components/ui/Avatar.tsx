@@ -1,6 +1,7 @@
 'use client';
 
 import { FunctionComponent } from 'react';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { User } from 'lucide-react';
 
@@ -56,9 +57,11 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 
   if (src) {
     return (
-      <img
+      <Image
         src={src}
         alt={alt || name || 'Avatar'}
+        width={48}
+        height={48}
         className={cn(
           'rounded-full object-cover',
           sizeClasses[size],
@@ -89,9 +92,11 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 const AvatarImage: FunctionComponent<{ src?: string; alt?: string; className?: string }> = ({ src, alt, className }) => {
   if (!src) return null;
   return (
-    <img
+    <Image
       src={src}
       alt={alt || 'Avatar'}
+      width={48}
+      height={48}
       className={cn('rounded-full object-cover w-full h-full', className)}
     />
   );

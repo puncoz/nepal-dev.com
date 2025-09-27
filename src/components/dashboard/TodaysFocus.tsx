@@ -1,7 +1,7 @@
 'use client';
 
 import { FunctionComponent } from 'react';
-import { Users, BookOpen, Briefcase, ArrowRight, Clock, MapPin } from 'lucide-react';
+import { Users, BookOpen, Briefcase, ArrowRight, Clock } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
 interface FocusCardProps {
@@ -199,7 +199,7 @@ const TodaysFocus: FunctionComponent = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Today's Focus</h2>
+        <h2 className="text-xl font-semibold text-gray-900">Today&apos;s Focus</h2>
         <p className="text-sm text-gray-600">Stay on track with your goals</p>
       </div>
       

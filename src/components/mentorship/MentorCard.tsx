@@ -3,7 +3,7 @@
 import Card, { CardContent, CardHeader } from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
-import Avatar, { AvatarImage, AvatarFallback } from '@/components/ui/Avatar';
+import Avatar from '@/components/ui/Avatar';
 import {
   Star,
   MapPin,
@@ -88,12 +88,13 @@ export const MentorCard = ({
           <div className="flex items-start space-x-4">
             {/* Avatar and Online Status */}
             <div className="relative">
-              <Avatar className="h-16 w-16">
-                <AvatarImage src={mentor.avatar} alt={mentor.name} />
-                <AvatarFallback className="text-lg">
-                  {mentor.name.split(' ').map(n => n[0]).join('')}
-                </AvatarFallback>
-              </Avatar>
+              <Avatar 
+                src={mentor.avatar} 
+                alt={mentor.name} 
+                name={mentor.name}
+                size="xl"
+                className="h-16 w-16"
+              />
               {mentor.isOnline && (
                 <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 border-2 border-white rounded-full"></div>
               )}
@@ -115,7 +116,7 @@ export const MentorCard = ({
                 </div>
                 <div className="flex items-center space-x-2">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => onFavorite?.(mentor.id)}
                     className={mentor.isFavorite ? 'text-red-500 hover:text-red-600' : 'text-gray-400 hover:text-red-500'}
@@ -123,7 +124,7 @@ export const MentorCard = ({
                     <Heart className={`h-4 w-4 ${mentor.isFavorite ? 'fill-current' : ''}`} />
                   </Button>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => onShare?.(mentor.id)}
                     className="text-gray-400 hover:text-gray-600"
@@ -158,12 +159,12 @@ export const MentorCard = ({
 
               <div className="flex flex-wrap gap-2 mb-3">
                 {mentor.skills.slice(0, 4).map((skill, index) => (
-                  <Badge key={index} variant="outline" className="text-xs">
+                  <Badge key={index} variant="default" className="text-xs">
                     {skill}
                   </Badge>
                 ))}
                 {mentor.skills.length > 4 && (
-                  <Badge variant="outline" className="text-xs text-gray-500">
+                  <Badge variant="default" className="text-xs text-gray-500">
                     +{mentor.skills.length - 4} more
                   </Badge>
                 )}
@@ -173,7 +174,7 @@ export const MentorCard = ({
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-1">
                     {mentor.sessionTypes.map((type, index) => (
-                      <Badge key={index} variant="outline" className="text-xs flex items-center gap-1">
+                      <Badge key={index} variant="default" className="text-xs flex items-center gap-1">
                         {getSessionTypeIcon(type)}
                         {type}
                       </Badge>
@@ -215,19 +216,20 @@ export const MentorCard = ({
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="relative">
-            <Avatar className="h-14 w-14">
-              <AvatarImage src={mentor.avatar} alt={mentor.name} />
-              <AvatarFallback className="text-lg">
-                {mentor.name.split(' ').map(n => n[0]).join('')}
-              </AvatarFallback>
-            </Avatar>
+            <Avatar 
+              src={mentor.avatar} 
+              alt={mentor.name} 
+              name={mentor.name}
+              size="lg"
+              className="h-14 w-14"
+            />
             {mentor.isOnline && (
               <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 border-2 border-white rounded-full"></div>
             )}
           </div>
           <div className="flex space-x-1">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={() => onFavorite?.(mentor.id)}
               className={`opacity-0 group-hover:opacity-100 transition-opacity ${
@@ -237,7 +239,7 @@ export const MentorCard = ({
               <Heart className={`h-4 w-4 ${mentor.isFavorite ? 'fill-current' : ''}`} />
             </Button>
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={() => onShare?.(mentor.id)}
               className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-gray-600"
@@ -277,12 +279,12 @@ export const MentorCard = ({
         {/* Skills */}
         <div className="flex flex-wrap gap-1">
           {mentor.skills.slice(0, 3).map((skill, index) => (
-            <Badge key={index} variant="outline" className="text-xs">
+            <Badge key={index} variant="default" className="text-xs">
               {skill}
             </Badge>
           ))}
           {mentor.skills.length > 3 && (
-            <Badge variant="outline" className="text-xs text-gray-500">
+            <Badge variant="default" className="text-xs text-gray-500">
               +{mentor.skills.length - 3}
             </Badge>
           )}
@@ -297,7 +299,7 @@ export const MentorCard = ({
         {/* Session Types */}
         <div className="flex space-x-1">
           {mentor.sessionTypes.map((type, index) => (
-            <Badge key={index} variant="outline" className="text-xs flex items-center gap-1">
+            <Badge key={index} variant="default" className="text-xs flex items-center gap-1">
               {getSessionTypeIcon(type)}
               {type}
             </Badge>

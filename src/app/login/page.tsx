@@ -49,7 +49,7 @@ const LoginPage = () => {
       gradient="blue"
       footer={
         <p className="text-xs text-gray-500">
-          Connecting Nepal's developer community since 2024
+          Connecting Nepal&apos;s developer community since 2024
         </p>
       }
     >
@@ -147,7 +147,7 @@ const LoginPage = () => {
         {/* Sign Up Link */}
         <div className="text-center mt-6">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link
               href="/register"
               className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"

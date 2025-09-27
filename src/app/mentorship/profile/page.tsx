@@ -7,21 +7,18 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Textarea from '@/components/ui/textarea';
 import Tabs, { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Avatar, { AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
+import Avatar from '@/components/ui/Avatar';
 import Switch from '@/components/ui/switch';
 import MentorshipBreadcrumb from '@/components/mentorship/MentorshipBreadcrumb';
 import {
   User,
-  Edit3,
   Save,
   Camera,
   Star,
   MapPin,
   Calendar,
-  Clock,
   Globe,
   Briefcase,
-  GraduationCap,
   Award,
   MessageSquare,
   Video,
@@ -33,8 +30,8 @@ import {
   EyeOff,
   Plus,
   X,
-  CheckCircle,
-  Search
+  Search,
+  Edit
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -134,11 +131,7 @@ const ProfilePage = () => {
   const [newSkill, setNewSkill] = useState('');
   const [newLanguage, setNewLanguage] = useState('');
 
-  const handleSave = () => {
-    // Here you would typically save to backend
-    setIsEditing(false);
-    console.log('Profile saved:', profile);
-  };
+
 
   const addSkill = () => {
     if (newSkill.trim() && !profile.skills.includes(newSkill.trim())) {
@@ -232,10 +225,20 @@ const ProfilePage = () => {
                 <Eye className="h-4 w-4" />
                 Preview Profile
               </Button>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                <Save className="h-4 w-4 mr-2" />
-                Save Changes
+              <Button 
+                variant="outline" 
+                onClick={() => setIsEditing(!isEditing)}
+                className="flex items-center gap-2"
+              >
+                <Edit className="h-4 w-4" />
+                {isEditing ? 'Cancel' : 'Edit Profile'}
               </Button>
+              {isEditing && (
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Changes
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -262,12 +265,13 @@ const ProfilePage = () => {
                 {/* Avatar and Role */}
                 <div className="flex items-start space-x-6">
                   <div className="relative">
-                    <Avatar className="h-24 w-24">
-                      <AvatarImage src={profile.avatar} alt={profile.name} />
-                      <AvatarFallback className="text-lg">
-                        {profile.name.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    </Avatar>
+                    <Avatar 
+                      src={profile.avatar} 
+                      alt={profile.name} 
+                      name={profile.name}
+                      className="h-24 w-24"
+                      size="xl"
+                    />
                     {isEditing && (
                       <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
                         <Camera className="h-4 w-4" />
@@ -395,7 +399,7 @@ const ProfilePage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Skills</label>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {profile.skills.map((skill, index) => (
-                      <Badge key={index} variant="outline" className="flex items-center gap-1">
+                      <Badge key={index} variant="default" className="flex items-center gap-1">
                         {skill}
                         {isEditing && (
                           <button
@@ -428,7 +432,7 @@ const ProfilePage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Languages</label>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {profile.languages.map((language, index) => (
-                      <Badge key={index} variant="outline" className="flex items-center gap-1">
+                      <Badge key={index} variant="default" className="flex items-center gap-1">
                         <Globe className="h-3 w-3" />
                         {language}
                         {isEditing && (
@@ -539,9 +543,8 @@ const ProfilePage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Session Types</label>
                   <div className="flex flex-wrap gap-2">
                     {['video', 'chat', 'in-person'].map((type) => (
-                      <Badge
+                      <div
                         key={type}
-                        variant={profile.preferences.sessionTypes.includes(type) ? 'default' : 'outline'}
                         className="cursor-pointer"
                         onClick={() => {
                           const types = profile.preferences.sessionTypes.includes(type)
@@ -553,11 +556,15 @@ const ProfilePage = () => {
                           }));
                         }}
                       >
-                        {type === 'video' && <Video className="h-3 w-3 mr-1" />}
-                        {type === 'chat' && <MessageSquare className="h-3 w-3 mr-1" />}
-                        {type === 'in-person' && <Users className="h-3 w-3 mr-1" />}
-                        {type.charAt(0).toUpperCase() + type.slice(1)}
-                      </Badge>
+                        <Badge
+                          variant={profile.preferences.sessionTypes.includes(type) ? 'success' : 'default'}
+                        >
+                          {type === 'video' && <Video className="h-3 w-3 mr-1" />}
+                          {type === 'chat' && <MessageSquare className="h-3 w-3 mr-1" />}
+                          {type === 'in-person' && <Users className="h-3 w-3 mr-1" />}
+                          {type.charAt(0).toUpperCase() + type.slice(1)}
+                        </Badge>
+                      </div>
                     ))}
                   </div>
                 </div>

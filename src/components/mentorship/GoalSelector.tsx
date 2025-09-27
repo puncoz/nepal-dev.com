@@ -189,7 +189,7 @@ const GoalSelector: React.FC<GoalSelectorProps> = ({
       
       {/* Help text */}
       <p className="text-sm text-gray-500">
-        💡 Select up to {maxSelections} areas you'd like to focus on. Our AI will find mentors who specialize in these areas.
+        💡 Select up to {maxSelections} areas you&apos;d like to focus on. Our AI will find mentors who specialize in these areas.
       </p>
     </div>
   );

@@ -1,17 +1,40 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
-import { Bot, RefreshCw, Star, TrendingUp, Code, Briefcase, GraduationCap, Filter, SlidersHorizontal } from 'lucide-react';
+import { Bot, RefreshCw, Star, Filter, SlidersHorizontal } from 'lucide-react';
 import Card from '@/components/ui/Card';
-import Badge from '@/components/ui/Badge';
+
 import MatchCard from '@/components/mentorship/MatchCard';
 import GoalSelector from '@/components/mentorship/GoalSelector';
-import SessionRequestModal from '@/components/mentorship/SessionRequestModal';
+import SessionRequestModal, { type SessionRequestData } from '@/components/mentorship/SessionRequestModal';
 import MentorshipBreadcrumb from '@/components/mentorship/MentorshipBreadcrumb';
+
+interface Mentor {
+  id: number;
+  name: string;
+  title: string;
+  experience: string;
+  location: string;
+  timezone: string;
+  languages: string[];
+  matchScore: number;
+  rating: number;
+  avatar: string;
+  skills: string[];
+  perfectFor: string[];
+  matchReasons: string[];
+  availability: string;
+  preferences: string;
+  menteesHelped: number;
+  successRate: number;
+  responseTime: string;
+}
 
 const AIMatches = () => {
   const [selectedGoals, setSelectedGoals] = useState<string[]>(['devops']);
   const [refreshing, setRefreshing] = useState(false);
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
-  const [selectedMentor, setSelectedMentor] = useState<any>(null);
+  const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
   const [filters, setFilters] = useState({
     minMatchScore: 0,
     experienceLevel: 'all',
@@ -21,9 +44,7 @@ const AIMatches = () => {
   });
   const [showFilters, setShowFilters] = useState(false);
 
-
-
-  const topMatches = [
+  const topMatches = useMemo(() => [
     {
       id: 1,
       name: 'Ram Kumar Shrestha',
@@ -99,7 +120,7 @@ const AIMatches = () => {
       successRate: 89,
       responseTime: '< 6 hours'
     }
-  ];
+  ], []);
 
   const filteredMatches = useMemo(() => {
     return topMatches.filter(match => {
@@ -118,7 +139,7 @@ const AIMatches = () => {
     );
   };
 
-  const handleFilterChange = (key: string, value: any) => {
+  const handleFilterChange = (key: string, value: string | number) => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
 
@@ -135,7 +156,7 @@ const AIMatches = () => {
     console.log('Saved match:', matchId);
   };
 
-  const handleSessionRequest = async (requestData: any) => {
+  const handleSessionRequest = async (requestData: SessionRequestData) => {
     // Handle session request submission
     console.log('Session request:', requestData);
     // Here you would typically send the request to your API
@@ -148,19 +169,7 @@ const AIMatches = () => {
     setRefreshing(false);
   };
 
-  const getMatchScoreColor = (score: number) => {
-    if (score >= 90) return 'text-green-600 bg-green-100';
-    if (score >= 80) return 'text-blue-600 bg-blue-100';
-    if (score >= 70) return 'text-yellow-600 bg-yellow-100';
-    return 'text-gray-600 bg-gray-100';
-  };
 
-  const getMatchScoreGradient = (score: number) => {
-    if (score >= 90) return 'from-green-500 to-emerald-500';
-    if (score >= 80) return 'from-blue-500 to-cyan-500';
-    if (score >= 70) return 'from-yellow-500 to-orange-500';
-    return 'from-gray-500 to-slate-500';
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 p-6">
@@ -212,7 +221,7 @@ const AIMatches = () => {
               className="flex items-center space-x-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-              <span>{refreshing ? 'Refreshing...' : 'Refresh Matches'}</span>
+              <span>{refreshing ? "Refreshing..." : "Refresh Matches"}</span>
             </button>
           </div>
 
@@ -266,7 +275,7 @@ const AIMatches = () => {
                 onClick={() => setShowFilters(!showFilters)}
                 className="text-purple-600 hover:text-purple-700 text-sm font-medium"
               >
-                {showFilters ? 'Hide' : 'Show'}
+                {showFilters ? "Hide" : "Show"}
               </button>
             </div>
             

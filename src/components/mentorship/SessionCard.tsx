@@ -3,7 +3,7 @@
 import Card, { CardContent, CardHeader } from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
-import Avatar, { AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
+import Avatar from '@/components/ui/Avatar';
 import {
   Calendar,
   Clock,
@@ -162,12 +162,13 @@ export const SessionCard = ({
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-start space-x-3">
-            <Avatar className="h-12 w-12">
-              <AvatarImage src={otherParticipant.avatar} alt={otherParticipant.name} />
-              <AvatarFallback>
-                {otherParticipant.name?.split(' ').map(n => n[0]).join('') || 'U'}
-              </AvatarFallback>
-            </Avatar>
+            <Avatar 
+              src={otherParticipant.avatar} 
+              alt={otherParticipant.name} 
+              name={otherParticipant.name}
+              size="lg"
+              className="h-12 w-12"
+            />
             <div className="flex-1 min-w-0">
               <h3 className="text-lg font-semibold text-gray-900 truncate">
                 {session.title}
@@ -189,14 +190,14 @@ export const SessionCard = ({
           </div>
           
           <div className="flex items-center space-x-2">
-            <Badge className={getStatusColor(session.status)} variant="outline">
+            <Badge className={getStatusColor(session.status)} variant="default">
               {getStatusIcon(session.status)}
               <span className="ml-1 capitalize">{session.status}</span>
             </Badge>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
+                <Button variant="outline" size="sm">
                   <MoreVertical className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -248,7 +249,7 @@ export const SessionCard = ({
         {/* Session Type and Location */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Badge variant="outline" className="flex items-center gap-1">
+            <Badge variant="default" className="flex items-center gap-1">
               {getSessionTypeIcon(session.type)}
               <span className="capitalize">{session.type}</span>
             </Badge>
@@ -259,7 +260,7 @@ export const SessionCard = ({
               </div>
             )}
             {session.isRecurring && (
-              <Badge variant="outline" className="text-xs">
+              <Badge variant="default" className="text-xs">
                 Recurring
               </Badge>
             )}
@@ -282,7 +283,7 @@ export const SessionCard = ({
             <h4 className="text-sm font-medium text-gray-900 mb-2">Session Goals:</h4>
             <div className="flex flex-wrap gap-1">
               {session.goals.map((goal, index) => (
-                <Badge key={index} variant="outline" className="text-xs">
+                <Badge key={index} variant="default" className="text-xs">
                   {goal}
                 </Badge>
               ))}

@@ -1,30 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import Card, { CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import Card, { CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import Badge from '@/components/ui/Badge';
 import Tabs, { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Calendar,
   Search,
-  Filter,
   Plus,
   CheckCircle,
   XCircle,
-  AlertCircle,
-  Video,
-  MessageSquare,
   Users,
   Clock,
-  MapPin,
   Star
 } from 'lucide-react';
 import MentorshipBreadcrumb from '@/components/mentorship/MentorshipBreadcrumb';
 import { SessionCard, type Session } from '@/components/mentorship/SessionCard';
 import Link from 'next/link';
-import Avatar, { AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 
 
 
@@ -32,14 +25,10 @@ const mockSessions: Session[] = [
   {
     id: '1',
     title: 'React Development Best Practices',
-    mentor: {
-      name: 'Rajesh Hamal',
-      avatar: '/avatars/rajesh.jpg'
-    },
-    mentee: {
-      name: 'Priya Sharma',
-      avatar: '/avatars/priya.jpg'
-    },
+    mentorName: 'Rajesh Hamal',
+    mentorAvatar: '/avatars/rajesh.jpg',
+    menteeName: 'Priya Sharma',
+    menteeAvatar: '/avatars/priya.jpg',
     date: '2024-01-15',
     time: '14:00',
     duration: 60,
@@ -51,14 +40,10 @@ const mockSessions: Session[] = [
   {
     id: '2',
     title: 'Career Guidance in Tech',
-    mentor: {
-      name: 'Sita Devi',
-      avatar: '/avatars/sita.jpg'
-    },
-    mentee: {
-      name: 'Arjun Thapa',
-      avatar: '/avatars/arjun.jpg'
-    },
+    mentorName: 'Sita Devi',
+    mentorAvatar: '/avatars/sita.jpg',
+    menteeName: 'Arjun Thapa',
+    menteeAvatar: '/avatars/arjun.jpg',
     date: '2024-01-12',
     time: '16:30',
     duration: 45,
@@ -71,14 +56,10 @@ const mockSessions: Session[] = [
   {
     id: '3',
     title: 'Startup Funding Strategies',
-    mentor: {
-      name: 'Krishna Bahadur',
-      avatar: '/avatars/krishna.jpg'
-    },
-    mentee: {
-      name: 'Maya Gurung',
-      avatar: '/avatars/maya.jpg'
-    },
+    mentorName: 'Krishna Bahadur',
+    mentorAvatar: '/avatars/krishna.jpg',
+    menteeName: 'Maya Gurung',
+    menteeAvatar: '/avatars/maya.jpg',
     date: '2024-01-18',
     time: '10:00',
     duration: 90,
@@ -90,14 +71,10 @@ const mockSessions: Session[] = [
   {
     id: '4',
     title: 'UI/UX Design Principles',
-    mentor: {
-      name: 'Ganga Devi',
-      avatar: '/avatars/ganga.jpg'
-    },
-    mentee: {
-      name: 'Bikash Rai',
-      avatar: '/avatars/bikash.jpg'
-    },
+    mentorName: 'Ganga Devi',
+    mentorAvatar: '/avatars/ganga.jpg',
+    menteeName: 'Bikash Rai',
+    menteeAvatar: '/avatars/bikash.jpg',
     date: '2024-01-10',
     time: '11:00',
     duration: 60,
@@ -116,8 +93,8 @@ const SessionsPage = () => {
 
   const filteredSessions = mockSessions.filter(session => {
     const matchesSearch = session.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         session.mentor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         session.mentee.name.toLowerCase().includes(searchTerm.toLowerCase());
+                         session.mentorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (session.menteeName && session.menteeName.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesStatus = statusFilter === 'all' || session.status === statusFilter;
     const matchesType = typeFilter === 'all' || session.type === typeFilter;
     return matchesSearch && matchesStatus && matchesType;
