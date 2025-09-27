@@ -86,4 +86,24 @@ const Avatar: FunctionComponent<AvatarProps> = ({
   );
 };
 
+const AvatarImage: FunctionComponent<{ src?: string; alt?: string; className?: string }> = ({ src, alt, className }) => {
+  if (!src) return null;
+  return (
+    <img
+      src={src}
+      alt={alt || 'Avatar'}
+      className={cn('rounded-full object-cover w-full h-full', className)}
+    />
+  );
+};
+
+const AvatarFallback: FunctionComponent<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
+  return (
+    <div className={cn('rounded-full flex items-center justify-center text-white font-medium bg-gradient-to-r from-blue-500 to-blue-600 w-full h-full', className)}>
+      {children}
+    </div>
+  );
+};
+
 export default Avatar;
+export { AvatarImage, AvatarFallback };

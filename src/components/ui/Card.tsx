@@ -47,4 +47,29 @@ const Card: FunctionComponent<CardProps> = ({
   );
 };
 
+const CardHeader: FunctionComponent<{ children: ReactNode; className?: string }> = ({ children, className }) => {
+  return (
+    <div className={cn('flex flex-col space-y-1.5 p-6', className)}>
+      {children}
+    </div>
+  );
+};
+
+const CardTitle: FunctionComponent<{ children: ReactNode; className?: string }> = ({ children, className }) => {
+  return (
+    <h3 className={cn('text-2xl font-semibold leading-none tracking-tight', className)}>
+      {children}
+    </h3>
+  );
+};
+
+const CardContent: FunctionComponent<{ children: ReactNode; className?: string }> = ({ children, className }) => {
+  return (
+    <div className={cn('p-6 pt-0', className)}>
+      {children}
+    </div>
+  );
+};
+
 export default Card;
+export { CardHeader, CardTitle, CardContent };
