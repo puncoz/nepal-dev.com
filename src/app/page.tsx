@@ -54,7 +54,7 @@ const HomePage = () => {
     sessions: 2156,
     projects: 342
   });
-  const [language, setLanguage] = useState<'en' | 'ne' | 'hi'>('en');
+  const [language, setLanguage] = useState<'en' | 'ne' | 'ja'>('en');
 
   const testimonials: Testimonial[] = [
     {
@@ -157,27 +157,27 @@ const HomePage = () => {
         communityMap: "समुदायिक नक्सा"
       }
     },
-    hi: {
+    ja: {
       hero: {
-        title: "नेपाल के डेवलपर समुदाय के साथ जुड़ें, सीखें, बढ़ें",
-        subtitle: "हजारों डेवलपर्स से जुड़ें, मेंटर खोजें, अवसर खोजें और साथ मिलकर अद्भुत प्रोजेक्ट बनाएं।",
-        getStarted: "शुरू करें",
-        watchDemo: "डेमो देखें",
-        browseMentors: "मेंटर्स ब्राउज़ करें"
+        title: "ネパールの開発者コミュニティと繋がり、学び、成長しよう",
+        subtitle: "何千人もの開発者と繋がり、メンターを見つけ、機会を発見し、素晴らしいプロジェクトを一緒に構築しましょう。",
+        getStarted: "始める",
+        watchDemo: "デモを見る",
+        browseMentors: "メンターを探す"
       },
       stats: {
-        developers: "डेवलपर्स",
-        mentors: "सक्रिय मेंटर्स",
-        sessions: "पूर्ण सत्र",
-        projects: "साझा प्रोजेक्ट्स"
+        developers: "開発者",
+        mentors: "アクティブメンター",
+        sessions: "完了セッション",
+        projects: "共有プロジェクト"
       },
       features: {
-        title: "बढ़ने के लिए आवश्यक सब कुछ",
-        aiMentorship: "AI-संचालित मेंटरशिप",
-        jobBoard: "स्मार्ट जॉब बोर्ड",
-        projectHub: "प्रोजेक्ट शोकेस",
-        learningHub: "लर्निंग हब",
-        communityMap: "कम्युनिटी मैप"
+        title: "成長に必要なすべて",
+        aiMentorship: "AI駆動メンターシップ",
+        jobBoard: "スマート求人ボード",
+        projectHub: "プロジェクトショーケース",
+        learningHub: "学習ハブ",
+        communityMap: "コミュニティマップ"
       }
     }
   };
@@ -243,10 +243,10 @@ const HomePage = () => {
                   नेपाली
                 </button>
                 <button
-                  onClick={() => setLanguage('hi')}
-                  className={`px-2 py-1 text-xs rounded ${language === 'hi' ? 'bg-white shadow-sm' : ''}`}
+                  onClick={() => setLanguage('ja')}
+                  className={`px-2 py-1 text-xs rounded ${language === 'ja' ? 'bg-white shadow-sm' : ''}`}
                 >
-                  हिंदी
+                  日本語
                 </button>
               </div>
               
