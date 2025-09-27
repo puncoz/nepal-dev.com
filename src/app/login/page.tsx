@@ -1,46 +1,51 @@
-'use client';
+"use client"
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import AuthCard from '@/components/auth/AuthCard';
-import Input from '@/components/ui/Input';
-import Button from '@/components/ui/Button';
-import SocialButton from '@/components/ui/SocialButton';
-import Checkbox from '@/components/ui/Checkbox';
-import Divider from '@/components/ui/Divider';
+import AuthCard from "@/components/auth/auth-card"
+import Button from "@/components/ui/button"
+import Checkbox from "@/components/ui/checkbox"
+import Divider from "@/components/ui/divider"
+import Input from "@/components/ui/input"
+import SocialButton from "@/components/ui/social-button"
+import Link from "next/link"
+import React, { useState } from "react"
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     rememberMe: false,
-  });
+  })
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
+      [name]: type === "checkbox" ? checked : value,
+    }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
+    e.preventDefault()
+    setIsLoading(true)
+
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Login form submitted:', formData);
-      // Handle successful login here
+      await new Promise(resolve => setTimeout(resolve, 2000))
+
+      // Here you would typically make an API call to authenticate the user
+      console.log("Login attempt:", { email: formData.email, password: formData.password })
+
+      // Simulate successful login - redirect to dashboard
+      window.location.href = "/dashboard"
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error)
+      // Handle login error here
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <AuthCard
@@ -62,7 +67,7 @@ const LoginPage = () => {
             <span className="text-lg">🔐</span>
             <h3 className="text-lg font-semibold text-gray-800">Sign In</h3>
           </div>
-          
+
           <Input
             id="email"
             name="email"
@@ -117,10 +122,10 @@ const LoginPage = () => {
           loading={isLoading}
           className="w-full shadow-lg"
         >
-          {isLoading ? 'Signing In...' : 'Sign In 🚀'}
+          {isLoading ? "Signing In..." : "Sign In 🚀"}
         </Button>
 
-        <Divider />
+        <Divider/>
 
         {/* Social Login Buttons */}
         <div className="space-y-3">
@@ -147,7 +152,7 @@ const LoginPage = () => {
         {/* Sign Up Link */}
         <div className="text-center mt-6">
           <p className="text-sm text-gray-600">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
@@ -158,7 +163,7 @@ const LoginPage = () => {
         </div>
       </form>
     </AuthCard>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

@@ -1,116 +1,104 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import Card, { CardContent } from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Tabs, { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Calendar,
-  Search,
-  Plus,
-  CheckCircle,
-  XCircle,
-  Users,
-  Clock,
-  Star
-} from 'lucide-react';
-import MentorshipBreadcrumb from '@/components/mentorship/MentorshipBreadcrumb';
-import { SessionCard, type Session } from '@/components/mentorship/SessionCard';
-import Link from 'next/link';
-
+import MentorshipBreadcrumb from "@/components/mentorship/mentorship-breadcrumb"
+import { type Session, SessionCard } from "@/components/mentorship/session-card"
+import Button from "@/components/ui/button"
+import Card, { CardContent } from "@/components/ui/card"
+import Input from "@/components/ui/input"
+import Tabs, { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Calendar, CheckCircle, Clock, Plus, Search, Star, Users, XCircle } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
 
 const mockSessions: Session[] = [
   {
-    id: '1',
-    title: 'React Development Best Practices',
-    mentorName: 'Rajesh Hamal',
-    mentorAvatar: '/avatars/rajesh.jpg',
-    menteeName: 'Priya Sharma',
-    menteeAvatar: '/avatars/priya.jpg',
-    date: '2024-01-15',
-    time: '14:00',
+    id: "1",
+    title: "React Development Best Practices",
+    mentorName: "Rajesh Hamal",
+    mentorAvatar: "/avatars/rajesh.jpg",
+    menteeName: "Priya Sharma",
+    menteeAvatar: "/avatars/priya.jpg",
+    date: "2024-01-15",
+    time: "14:00",
     duration: 60,
-    type: 'video',
-    status: 'scheduled',
-    goals: ['React Hooks', 'State Management', 'Performance'],
-    meetingLink: 'https://meet.google.com/abc-def-ghi'
+    type: "video",
+    status: "scheduled",
+    goals: ["React Hooks", "State Management", "Performance"],
+    meetingLink: "https://meet.google.com/abc-def-ghi",
   },
   {
-    id: '2',
-    title: 'Career Guidance in Tech',
-    mentorName: 'Sita Devi',
-    mentorAvatar: '/avatars/sita.jpg',
-    menteeName: 'Arjun Thapa',
-    menteeAvatar: '/avatars/arjun.jpg',
-    date: '2024-01-12',
-    time: '16:30',
+    id: "2",
+    title: "Career Guidance in Tech",
+    mentorName: "Sita Devi",
+    mentorAvatar: "/avatars/sita.jpg",
+    menteeName: "Arjun Thapa",
+    menteeAvatar: "/avatars/arjun.jpg",
+    date: "2024-01-12",
+    time: "16:30",
     duration: 45,
-    type: 'video',
-    status: 'completed',
-    goals: ['Career Planning', 'Skill Development'],
+    type: "video",
+    status: "completed",
+    goals: ["Career Planning", "Skill Development"],
     rating: 5,
-    feedback: 'Excellent session! Very insightful advice on career progression.'
+    feedback: "Excellent session! Very insightful advice on career progression.",
   },
   {
-    id: '3',
-    title: 'Startup Funding Strategies',
-    mentorName: 'Krishna Bahadur',
-    mentorAvatar: '/avatars/krishna.jpg',
-    menteeName: 'Maya Gurung',
-    menteeAvatar: '/avatars/maya.jpg',
-    date: '2024-01-18',
-    time: '10:00',
+    id: "3",
+    title: "Startup Funding Strategies",
+    mentorName: "Krishna Bahadur",
+    mentorAvatar: "/avatars/krishna.jpg",
+    menteeName: "Maya Gurung",
+    menteeAvatar: "/avatars/maya.jpg",
+    date: "2024-01-18",
+    time: "10:00",
     duration: 90,
-    type: 'in-person',
-    status: 'pending',
-    location: 'Kathmandu Tech Hub',
-    goals: ['Funding', 'Business Plan', 'Investor Relations']
+    type: "in-person",
+    status: "pending",
+    location: "Kathmandu Tech Hub",
+    goals: ["Funding", "Business Plan", "Investor Relations"],
   },
   {
-    id: '4',
-    title: 'UI/UX Design Principles',
-    mentorName: 'Ganga Devi',
-    mentorAvatar: '/avatars/ganga.jpg',
-    menteeName: 'Bikash Rai',
-    menteeAvatar: '/avatars/bikash.jpg',
-    date: '2024-01-10',
-    time: '11:00',
+    id: "4",
+    title: "UI/UX Design Principles",
+    mentorName: "Ganga Devi",
+    mentorAvatar: "/avatars/ganga.jpg",
+    menteeName: "Bikash Rai",
+    menteeAvatar: "/avatars/bikash.jpg",
+    date: "2024-01-10",
+    time: "11:00",
     duration: 60,
-    type: 'chat',
-    status: 'cancelled',
-    goals: ['Design Systems', 'User Research']
-  }
-];
+    type: "chat",
+    status: "cancelled",
+    goals: ["Design Systems", "User Research"],
+  },
+]
 
 const SessionsPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
-  const [typeFilter, setTypeFilter] = useState<string>('all');
-
+  const [searchTerm, setSearchTerm] = useState("")
+  const [statusFilter, setStatusFilter] = useState<string>("all")
+  const [typeFilter, setTypeFilter] = useState<string>("all")
 
 
   const filteredSessions = mockSessions.filter(session => {
     const matchesSearch = session.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         session.mentorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (session.menteeName && session.menteeName.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesStatus = statusFilter === 'all' || session.status === statusFilter;
-    const matchesType = typeFilter === 'all' || session.type === typeFilter;
-    return matchesSearch && matchesStatus && matchesType;
-  });
+      session.mentorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (session.menteeName && session.menteeName.toLowerCase().includes(searchTerm.toLowerCase()))
+    const matchesStatus = statusFilter === "all" || session.status === statusFilter
+    const matchesType = typeFilter === "all" || session.type === typeFilter
+    return matchesSearch && matchesStatus && matchesType
+  })
 
-  const upcomingSessions = filteredSessions.filter(s => s.status === 'scheduled' || s.status === 'pending');
-  const completedSessions = filteredSessions.filter(s => s.status === 'completed');
-  const cancelledSessions = filteredSessions.filter(s => s.status === 'cancelled');
-
+  const upcomingSessions = filteredSessions.filter(s => s.status === "scheduled" || s.status === "pending")
+  const completedSessions = filteredSessions.filter(s => s.status === "completed")
+  const cancelledSessions = filteredSessions.filter(s => s.status === "cancelled")
 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="container mx-auto px-4 py-8">
-        <MentorshipBreadcrumb items={[{ label: 'Sessions', href: '/mentorship/sessions' }]} />
-        
+        <MentorshipBreadcrumb items={[{ label: "Sessions", href: "/mentorship/sessions" }]}/>
+
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -120,18 +108,18 @@ const SessionsPage = () => {
             <div className="flex items-center gap-3">
               <Link href="/mentorship/browse">
                 <Button variant="outline" className="flex items-center gap-2">
-                  <Search className="h-4 w-4" />
+                  <Search className="h-4 w-4"/>
                   Browse Mentors
                 </Button>
               </Link>
               <Link href="/mentorship/profile">
                 <Button variant="outline" className="flex items-center gap-2">
-                  <Users className="h-4 w-4" />
+                  <Users className="h-4 w-4"/>
                   My Profile
                 </Button>
               </Link>
               <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="h-4 w-4 mr-2"/>
                 Schedule Session
               </Button>
             </div>
@@ -140,7 +128,7 @@ const SessionsPage = () => {
           {/* Search and Filters */}
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"/>
               <Input
                 placeholder="Search sessions, mentors, or mentees..."
                 value={searchTerm}
@@ -182,7 +170,7 @@ const SessionsPage = () => {
                     <p className="text-sm text-gray-600">Upcoming</p>
                     <p className="text-2xl font-bold text-blue-600">{upcomingSessions.length}</p>
                   </div>
-                  <Calendar className="h-8 w-8 text-blue-600" />
+                  <Calendar className="h-8 w-8 text-blue-600"/>
                 </div>
               </CardContent>
             </Card>
@@ -193,7 +181,7 @@ const SessionsPage = () => {
                     <p className="text-sm text-gray-600">Completed</p>
                     <p className="text-2xl font-bold text-green-600">{completedSessions.length}</p>
                   </div>
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+                  <CheckCircle className="h-8 w-8 text-green-600"/>
                 </div>
               </CardContent>
             </Card>
@@ -204,7 +192,7 @@ const SessionsPage = () => {
                     <p className="text-sm text-gray-600">This Month</p>
                     <p className="text-2xl font-bold text-purple-600">{mockSessions.length}</p>
                   </div>
-                  <Clock className="h-8 w-8 text-purple-600" />
+                  <Clock className="h-8 w-8 text-purple-600"/>
                 </div>
               </CardContent>
             </Card>
@@ -215,7 +203,7 @@ const SessionsPage = () => {
                     <p className="text-sm text-gray-600">Avg Rating</p>
                     <p className="text-2xl font-bold text-yellow-600">4.8</p>
                   </div>
-                  <Star className="h-8 w-8 text-yellow-600" />
+                  <Star className="h-8 w-8 text-yellow-600"/>
                 </div>
               </CardContent>
             </Card>
@@ -235,17 +223,17 @@ const SessionsPage = () => {
             {filteredSessions.length > 0 ? (
               <div className="grid gap-4">
                 {filteredSessions.map((session) => (
-                  <SessionCard key={session.id} session={session} />
+                  <SessionCard key={session.id} session={session}/>
                 ))}
               </div>
             ) : (
               <Card>
                 <CardContent className="p-8 text-center">
-                  <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4"/>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">No sessions found</h3>
                   <p className="text-gray-600 mb-4">Try adjusting your search or filters</p>
                   <Button className="bg-blue-600 hover:bg-blue-700">
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Plus className="h-4 w-4 mr-2"/>
                     Schedule Your First Session
                   </Button>
                 </CardContent>
@@ -255,11 +243,11 @@ const SessionsPage = () => {
 
           <TabsContent value="upcoming" className="space-y-4">
             {upcomingSessions.map((session) => (
-              <SessionCard key={session.id} session={session} />
+              <SessionCard key={session.id} session={session}/>
             ))}
             {upcomingSessions.length === 0 && (
               <div className="text-center py-8 text-gray-500">
-                <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50"/>
                 <p>No upcoming sessions</p>
               </div>
             )}
@@ -267,11 +255,11 @@ const SessionsPage = () => {
 
           <TabsContent value="completed" className="space-y-4">
             {completedSessions.map((session) => (
-              <SessionCard key={session.id} session={session} />
+              <SessionCard key={session.id} session={session}/>
             ))}
             {completedSessions.length === 0 && (
               <div className="text-center py-8 text-gray-500">
-                <CheckCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <CheckCircle className="h-12 w-12 mx-auto mb-4 opacity-50"/>
                 <p>No completed sessions</p>
               </div>
             )}
@@ -279,11 +267,11 @@ const SessionsPage = () => {
 
           <TabsContent value="cancelled" className="space-y-4">
             {cancelledSessions.map((session) => (
-              <SessionCard key={session.id} session={session} />
+              <SessionCard key={session.id} session={session}/>
             ))}
             {cancelledSessions.length === 0 && (
               <div className="text-center py-8 text-gray-500">
-                <XCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <XCircle className="h-12 w-12 mx-auto mb-4 opacity-50"/>
                 <p>No cancelled sessions</p>
               </div>
             )}
@@ -291,7 +279,7 @@ const SessionsPage = () => {
         </Tabs>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SessionsPage;
+export default SessionsPage

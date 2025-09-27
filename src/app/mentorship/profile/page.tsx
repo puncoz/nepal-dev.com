@@ -1,46 +1,46 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import Card, { CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import Badge from '@/components/ui/Badge';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
-import Textarea from '@/components/ui/textarea';
-import Tabs, { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Avatar from '@/components/ui/Avatar';
-import Switch from '@/components/ui/switch';
-import MentorshipBreadcrumb from '@/components/mentorship/MentorshipBreadcrumb';
+import MentorshipBreadcrumb from "@/components/mentorship/mentorship-breadcrumb"
+import Avatar from "@/components/ui/avatar"
+import Badge from "@/components/ui/badge"
+import Button from "@/components/ui/button"
+import Card, { CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Input from "@/components/ui/input"
+import Switch from "@/components/ui/switch"
+import Tabs, { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Textarea from "@/components/ui/textarea"
 import {
-  User,
-  Save,
-  Camera,
-  Star,
-  MapPin,
-  Calendar,
-  Globe,
-  Briefcase,
   Award,
-  MessageSquare,
-  Video,
-  Users,
-  Settings,
   Bell,
-  Shield,
+  Briefcase,
+  Calendar,
+  Camera,
+  Edit,
   Eye,
   EyeOff,
+  Globe,
+  MapPin,
+  MessageSquare,
   Plus,
-  X,
+  Save,
   Search,
-  Edit
-} from 'lucide-react';
-import Link from 'next/link';
+  Settings,
+  Shield,
+  Star,
+  User,
+  Users,
+  Video,
+  X,
+} from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 
 interface UserProfile {
   id: string;
   name: string;
   email: string;
   avatar: string;
-  role: 'mentor' | 'mentee' | 'both';
+  role: "mentor" | "mentee" | "both";
   title: string;
   company: string;
   location: string;
@@ -81,21 +81,21 @@ interface UserProfile {
 }
 
 const mockProfile: UserProfile = {
-  id: '1',
-  name: 'Rajesh Hamal',
-  email: 'rajesh.hamal@example.com',
-  avatar: '/avatars/rajesh.jpg',
-  role: 'mentor',
-  title: 'Senior Full Stack Developer',
-  company: 'Tech Nepal Pvt. Ltd.',
-  location: 'Kathmandu, Nepal',
-  timezone: 'Asia/Kathmandu',
-  bio: 'Passionate software developer with 8+ years of experience in full-stack development. I love mentoring junior developers and sharing knowledge about modern web technologies, especially React, Node.js, and cloud architecture.',
+  id: "1",
+  name: "Rajesh Hamal",
+  email: "rajesh.hamal@example.com",
+  avatar: "/avatars/rajesh.jpg",
+  role: "mentor",
+  title: "Senior Full Stack Developer",
+  company: "Tech Nepal Pvt. Ltd.",
+  location: "Kathmandu, Nepal",
+  timezone: "Asia/Kathmandu",
+  bio: "Passionate software developer with 8+ years of experience in full-stack development. I love mentoring junior developers and sharing knowledge about modern web technologies, especially React, Node.js, and cloud architecture.",
   experience: 8,
   rating: 4.9,
   totalSessions: 127,
-  skills: ['React', 'Node.js', 'TypeScript', 'AWS', 'MongoDB', 'GraphQL', 'Docker'],
-  languages: ['English', 'Nepali', 'Hindi'],
+  skills: ["React", "Node.js", "TypeScript", "AWS", "MongoDB", "GraphQL", "Docker"],
+  languages: ["English", "Nepali", "Hindi"],
   availability: {
     monday: true,
     tuesday: true,
@@ -103,105 +103,104 @@ const mockProfile: UserProfile = {
     thursday: true,
     friday: true,
     saturday: false,
-    sunday: false
+    sunday: false,
   },
   preferences: {
-    sessionTypes: ['video', 'chat'],
+    sessionTypes: ["video", "chat"],
     maxSessionsPerWeek: 5,
-    sessionDuration: 60
+    sessionDuration: 60,
   },
   notifications: {
     email: true,
     push: true,
     sessionReminders: true,
     newMessages: true,
-    weeklyDigest: false
+    weeklyDigest: false,
   },
   privacy: {
     profileVisible: true,
     showEmail: false,
     showLocation: true,
-    allowDirectMessages: true
-  }
-};
+    allowDirectMessages: true,
+  },
+}
 
 const ProfilePage = () => {
-  const [profile, setProfile] = useState<UserProfile>(mockProfile);
-  const [isEditing, setIsEditing] = useState(false);
-  const [newSkill, setNewSkill] = useState('');
-  const [newLanguage, setNewLanguage] = useState('');
-
+  const [profile, setProfile] = useState<UserProfile>(mockProfile)
+  const [isEditing, setIsEditing] = useState(false)
+  const [newSkill, setNewSkill] = useState("")
+  const [newLanguage, setNewLanguage] = useState("")
 
 
   const addSkill = () => {
     if (newSkill.trim() && !profile.skills.includes(newSkill.trim())) {
       setProfile(prev => ({
         ...prev,
-        skills: [...prev.skills, newSkill.trim()]
-      }));
-      setNewSkill('');
+        skills: [...prev.skills, newSkill.trim()],
+      }))
+      setNewSkill("")
     }
-  };
+  }
 
   const removeSkill = (skillToRemove: string) => {
     setProfile(prev => ({
       ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
-    }));
-  };
+      skills: prev.skills.filter(skill => skill !== skillToRemove),
+    }))
+  }
 
   const addLanguage = () => {
     if (newLanguage.trim() && !profile.languages.includes(newLanguage.trim())) {
       setProfile(prev => ({
         ...prev,
-        languages: [...prev.languages, newLanguage.trim()]
-      }));
-      setNewLanguage('');
+        languages: [...prev.languages, newLanguage.trim()],
+      }))
+      setNewLanguage("")
     }
-  };
+  }
 
   const removeLanguage = (languageToRemove: string) => {
     setProfile(prev => ({
       ...prev,
-      languages: prev.languages.filter(lang => lang !== languageToRemove)
-    }));
-  };
+      languages: prev.languages.filter(lang => lang !== languageToRemove),
+    }))
+  }
 
   const updateAvailability = (day: keyof typeof profile.availability) => {
     setProfile(prev => ({
       ...prev,
       availability: {
         ...prev.availability,
-        [day]: !prev.availability[day]
-      }
-    }));
-  };
+        [day]: !prev.availability[day],
+      },
+    }))
+  }
 
   const updateNotification = (key: keyof typeof profile.notifications) => {
     setProfile(prev => ({
       ...prev,
       notifications: {
         ...prev.notifications,
-        [key]: !prev.notifications[key]
-      }
-    }));
-  };
+        [key]: !prev.notifications[key],
+      },
+    }))
+  }
 
   const updatePrivacy = (key: keyof typeof profile.privacy) => {
     setProfile(prev => ({
       ...prev,
       privacy: {
         ...prev.privacy,
-        [key]: !prev.privacy[key]
-      }
-    }));
-  };
+        [key]: !prev.privacy[key],
+      },
+    }))
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
       <div className="container mx-auto px-4 py-8">
-        <MentorshipBreadcrumb items={[{ label: 'Profile', href: '/mentorship/profile' }]} />
-        
+        <MentorshipBreadcrumb items={[{ label: "Profile", href: "/mentorship/profile" }]}/>
+
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -211,31 +210,32 @@ const ProfilePage = () => {
             <div className="flex items-center gap-3">
               <Link href="/mentorship/browse">
                 <Button variant="outline" className="flex items-center gap-2">
-                  <Search className="h-4 w-4" />
+                  <Search className="h-4 w-4"/>
                   Browse Mentors
                 </Button>
               </Link>
               <Link href="/mentorship/sessions">
                 <Button variant="outline" className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
+                  <Calendar className="h-4 w-4"/>
                   My Sessions
                 </Button>
               </Link>
               <Button variant="outline" className="flex items-center gap-2">
-                <Eye className="h-4 w-4" />
+                <Eye className="h-4 w-4"/>
                 Preview Profile
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setIsEditing(!isEditing)}
                 className="flex items-center gap-2"
               >
-                <Edit className="h-4 w-4" />
-                {isEditing ? 'Cancel' : 'Edit Profile'}
+                <Edit className="h-4 w-4"/>
+                {isEditing ? "Cancel" : "Edit Profile"}
               </Button>
               {isEditing && (
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <Save className="h-4 w-4 mr-2" />
+                <Button
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Save className="h-4 w-4 mr-2"/>
                   Save Changes
                 </Button>
               )}
@@ -257,7 +257,7 @@ const ProfilePage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
+                  <User className="h-5 w-5"/>
                   Basic Information
                 </CardTitle>
               </CardHeader>
@@ -265,16 +265,16 @@ const ProfilePage = () => {
                 {/* Avatar and Role */}
                 <div className="flex items-start space-x-6">
                   <div className="relative">
-                    <Avatar 
-                      src={profile.avatar} 
-                      alt={profile.name} 
+                    <Avatar
+                      src={profile.avatar}
+                      alt={profile.name}
                       name={profile.name}
                       className="h-24 w-24"
                       size="xl"
                     />
                     {isEditing && (
                       <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
-                        <Camera className="h-4 w-4" />
+                        <Camera className="h-4 w-4"/>
                       </Button>
                     )}
                   </div>
@@ -306,14 +306,14 @@ const ProfilePage = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                       <Badge className={`${
-                        profile.role === 'mentor' ? 'bg-blue-100 text-blue-800' :
-                        profile.role === 'mentee' ? 'bg-green-100 text-green-800' :
-                        'bg-purple-100 text-purple-800'
+                        profile.role === "mentor" ? "bg-blue-100 text-blue-800" :
+                          profile.role === "mentee" ? "bg-green-100 text-green-800" :
+                            "bg-purple-100 text-purple-800"
                       }`}>
                         {profile.role.charAt(0).toUpperCase() + profile.role.slice(1)}
                       </Badge>
                       <div className="flex items-center space-x-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400"/>
                         <span className="font-medium">{profile.rating}</span>
                         <span className="text-gray-500">({profile.totalSessions} sessions)</span>
                       </div>
@@ -332,7 +332,7 @@ const ProfilePage = () => {
                       />
                     ) : (
                       <p className="flex items-center gap-2">
-                        <Briefcase className="h-4 w-4 text-gray-500" />
+                        <Briefcase className="h-4 w-4 text-gray-500"/>
                         {profile.title}
                       </p>
                     )}
@@ -357,7 +357,7 @@ const ProfilePage = () => {
                       />
                     ) : (
                       <p className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-gray-500" />
+                        <MapPin className="h-4 w-4 text-gray-500"/>
                         {profile.location}
                       </p>
                     )}
@@ -372,7 +372,7 @@ const ProfilePage = () => {
                       />
                     ) : (
                       <p className="flex items-center gap-2">
-                        <Award className="h-4 w-4 text-gray-500" />
+                        <Award className="h-4 w-4 text-gray-500"/>
                         {profile.experience} years
                       </p>
                     )}
@@ -406,7 +406,7 @@ const ProfilePage = () => {
                             onClick={() => removeSkill(skill)}
                             className="ml-1 hover:text-red-600"
                           >
-                            <X className="h-3 w-3" />
+                            <X className="h-3 w-3"/>
                           </button>
                         )}
                       </Badge>
@@ -418,10 +418,10 @@ const ProfilePage = () => {
                         placeholder="Add a skill"
                         value={newSkill}
                         onChange={(e) => setNewSkill(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && addSkill()}
+                        onKeyPress={(e) => e.key === "Enter" && addSkill()}
                       />
                       <Button onClick={addSkill} size="sm">
-                        <Plus className="h-4 w-4" />
+                        <Plus className="h-4 w-4"/>
                       </Button>
                     </div>
                   )}
@@ -433,14 +433,14 @@ const ProfilePage = () => {
                   <div className="flex flex-wrap gap-2 mb-2">
                     {profile.languages.map((language, index) => (
                       <Badge key={index} variant="default" className="flex items-center gap-1">
-                        <Globe className="h-3 w-3" />
+                        <Globe className="h-3 w-3"/>
                         {language}
                         {isEditing && (
                           <button
                             onClick={() => removeLanguage(language)}
                             className="ml-1 hover:text-red-600"
                           >
-                            <X className="h-3 w-3" />
+                            <X className="h-3 w-3"/>
                           </button>
                         )}
                       </Badge>
@@ -452,10 +452,10 @@ const ProfilePage = () => {
                         placeholder="Add a language"
                         value={newLanguage}
                         onChange={(e) => setNewLanguage(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && addLanguage()}
+                        onKeyPress={(e) => e.key === "Enter" && addLanguage()}
                       />
                       <Button onClick={addLanguage} size="sm">
-                        <Plus className="h-4 w-4" />
+                        <Plus className="h-4 w-4"/>
                       </Button>
                     </div>
                   )}
@@ -469,7 +469,7 @@ const ProfilePage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
+                  <Calendar className="h-5 w-5"/>
                   Weekly Availability
                 </CardTitle>
               </CardHeader>
@@ -491,7 +491,7 @@ const ProfilePage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
+                  <Settings className="h-5 w-5"/>
                   Session Preferences
                 </CardTitle>
               </CardHeader>
@@ -506,8 +506,8 @@ const ProfilePage = () => {
                         ...prev,
                         preferences: {
                           ...prev.preferences,
-                          maxSessionsPerWeek: parseInt(e.target.value) || 0
-                        }
+                          maxSessionsPerWeek: parseInt(e.target.value) || 0,
+                        },
                       }))}
                     />
                   </div>
@@ -519,8 +519,8 @@ const ProfilePage = () => {
                         ...prev,
                         preferences: {
                           ...prev.preferences,
-                          sessionDuration: parseInt(e.target.value)
-                        }
+                          sessionDuration: parseInt(e.target.value),
+                        },
                       }))}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -542,26 +542,26 @@ const ProfilePage = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Session Types</label>
                   <div className="flex flex-wrap gap-2">
-                    {['video', 'chat', 'in-person'].map((type) => (
+                    {["video", "chat", "in-person"].map((type) => (
                       <div
                         key={type}
                         className="cursor-pointer"
                         onClick={() => {
                           const types = profile.preferences.sessionTypes.includes(type)
                             ? profile.preferences.sessionTypes.filter(t => t !== type)
-                            : [...profile.preferences.sessionTypes, type];
+                            : [...profile.preferences.sessionTypes, type]
                           setProfile(prev => ({
                             ...prev,
-                            preferences: { ...prev.preferences, sessionTypes: types }
-                          }));
+                            preferences: { ...prev.preferences, sessionTypes: types },
+                          }))
                         }}
                       >
                         <Badge
-                          variant={profile.preferences.sessionTypes.includes(type) ? 'success' : 'default'}
+                          variant={profile.preferences.sessionTypes.includes(type) ? "success" : "default"}
                         >
-                          {type === 'video' && <Video className="h-3 w-3 mr-1" />}
-                          {type === 'chat' && <MessageSquare className="h-3 w-3 mr-1" />}
-                          {type === 'in-person' && <Users className="h-3 w-3 mr-1" />}
+                          {type === "video" && <Video className="h-3 w-3 mr-1"/>}
+                          {type === "chat" && <MessageSquare className="h-3 w-3 mr-1"/>}
+                          {type === "in-person" && <Users className="h-3 w-3 mr-1"/>}
                           {type.charAt(0).toUpperCase() + type.slice(1)}
                         </Badge>
                       </div>
@@ -577,7 +577,7 @@ const ProfilePage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Bell className="h-5 w-5" />
+                  <Bell className="h-5 w-5"/>
                   Notification Preferences
                 </CardTitle>
               </CardHeader>
@@ -586,14 +586,14 @@ const ProfilePage = () => {
                   <div key={key} className="flex items-center justify-between p-3 border rounded-lg">
                     <div>
                       <span className="font-medium capitalize">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                        {key.replace(/([A-Z])/g, " $1").trim()}
                       </span>
                       <p className="text-sm text-gray-600">
-                        {key === 'email' && 'Receive notifications via email'}
-                        {key === 'push' && 'Receive push notifications in browser'}
-                        {key === 'sessionReminders' && 'Get reminders before scheduled sessions'}
-                        {key === 'newMessages' && 'Notify when you receive new messages'}
-                        {key === 'weeklyDigest' && 'Weekly summary of your mentorship activity'}
+                        {key === "email" && "Receive notifications via email"}
+                        {key === "push" && "Receive push notifications in browser"}
+                        {key === "sessionReminders" && "Get reminders before scheduled sessions"}
+                        {key === "newMessages" && "Notify when you receive new messages"}
+                        {key === "weeklyDigest" && "Weekly summary of your mentorship activity"}
                       </p>
                     </div>
                     <Switch
@@ -611,7 +611,7 @@ const ProfilePage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
+                  <Shield className="h-5 w-5"/>
                   Privacy Settings
                 </CardTitle>
               </CardHeader>
@@ -619,16 +619,17 @@ const ProfilePage = () => {
                 {Object.entries(profile.privacy).map(([key, enabled]) => (
                   <div key={key} className="flex items-center justify-between p-3 border rounded-lg">
                     <div className="flex items-center gap-3">
-                      {enabled ? <Eye className="h-4 w-4 text-green-600" /> : <EyeOff className="h-4 w-4 text-gray-400" />}
+                      {enabled ? <Eye className="h-4 w-4 text-green-600"/> :
+                        <EyeOff className="h-4 w-4 text-gray-400"/>}
                       <div>
                         <span className="font-medium capitalize">
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
+                          {key.replace(/([A-Z])/g, " $1").trim()}
                         </span>
                         <p className="text-sm text-gray-600">
-                          {key === 'profileVisible' && 'Make your profile visible to other users'}
-                          {key === 'showEmail' && 'Display your email address on your profile'}
-                          {key === 'showLocation' && 'Show your location on your profile'}
-                          {key === 'allowDirectMessages' && 'Allow other users to send you direct messages'}
+                          {key === "profileVisible" && "Make your profile visible to other users"}
+                          {key === "showEmail" && "Display your email address on your profile"}
+                          {key === "showLocation" && "Show your location on your profile"}
+                          {key === "allowDirectMessages" && "Allow other users to send you direct messages"}
                         </p>
                       </div>
                     </div>
@@ -644,7 +645,7 @@ const ProfilePage = () => {
         </Tabs>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfilePage;
+export default ProfilePage
